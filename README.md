@@ -8,6 +8,8 @@ Haunt is a small, invite only, web service which helps keep your github issues u
 
 Ultimately, Haunt's aim is to reduce the number of steps between an open issue and a closed issue.
 
+
+
 ### How it's done?
 
 Every 15 minutes haunt pulls new issues and runs a series of tests against the content of said issue.
@@ -15,6 +17,8 @@ Every 15 minutes haunt pulls new issues and runs a series of tests against the c
 - **If tests fail** the issue is closed and a comment is made to alert the issue creator why their issue was closed.
 - **If tests pass** the issue is tagged and assigned.
 Tests are based on @necolas's guide here.
+
+
 
 ### Where to start?
 
