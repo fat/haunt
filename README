@@ -1,26 +1,21 @@
-GITHUB BOT
-==========
+# HAUNT
 
-### The problem
+#### What it is?
 
-Large projects have 1000's of users with only a handful of maintainers.
+Haunt is a small, invite only, web service which helps keep your github issues under control. It does this by patroling your github repo and closing, sorting, and commenting on your issues as it sees fit.
 
-Maintainers are often involved in several projects, and their time is very valuable and therefore shouldn't be wasted trying to interpret inconsistent or incomplete github issues.
+Ultimately, Haunt's aim is to reduce the number of steps between an open issue and a closed issue.
 
-### The solution
+#### How it's done?
+Every 15 minutes haunt pulls new issues and runs a series of tests against the content of said issue.
 
-A bot which validates github issues for relevance and completeness - closing invalid tickets and tagging and organizing valid tickets.
+- **If tests fail** the issue is closed and a comment is made to alert the issue creator why their issue was closed.
+- **If tests pass** the issue is tagged and assigned.
+Tests are based on @necolas's guide here.
 
-This bot should educate users on the correct way to file issues (including pull requests) for a given project.
+#### Where to start?
+Getting started with haunt is dead simple. Just add him as a collaborator to your project and he will start processing your issues right away.
 
-#### Invalid Issues
+Tired of haunt? Just remove him from your repo!
 
-If an issue fails to validate a provided set of tests (default tests based on [necolas's issue guidelines](https://github.com/necolas/issue-guidelines)), then an explicit error message is added to the ticket, the ticket is closed, and optionally a link to the issue filing guidelines is provided.
-
-#### Valid Issues
-
-Valid issues are tagged and assigned to relevant authors based on a set of simple assertion tests.
-
-#### .botrc
-
-a json spec which includes path to tests and path to issue filing readme.
+If you have any bugs or issues, please report them on our github page here!
