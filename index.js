@@ -9,7 +9,7 @@
 "use strict";
 
 var express = require('express');
-var hogan   = require('express-hogan.js'); // require('express-hogan.js')
+var hogan   = require('express-hogan.js');
 var haunt   = require('./lib/haunt');
 
 var app = express.createServer();
