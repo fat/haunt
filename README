@@ -1,0 +1,26 @@
+GITHUB BOT
+==========
+
+### The problem
+
+Large projects have 1000's of users with only a handful of maintainers.
+
+Maintainers are often involved in several projects, and their time is very valuable and therefore shouldn't be wasted trying to interpret inconsistent or incomplete github issues.
+
+### The solution
+
+A bot which validates github issues for relevance and completeness - closing invalid tickets and tagging and organizing valid tickets.
+
+This bot should educate users on the correct way to file issues (including pull requests) for a given project.
+
+#### Invalid Issues
+
+If an issue fails to validate a provided set of tests (default tests based on [necolas's issue guidelines](https://github.com/necolas/issue-guidelines)), then an explicit error message is added to the ticket, the ticket is closed, and optionally a link to the issue filing guidelines is provided.
+
+#### Valid Issues
+
+Valid issues are tagged and assigned to relevant authors based on a set of simple assertion tests.
+
+#### .botrc
+
+a json spec which includes path to tests and path to issue filing readme.
