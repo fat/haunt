@@ -9,6 +9,7 @@
     "async":            "latest",
     "github":           "latest",
     "express":          "latest",
+    "hogan.js":         "latest",
     "express-hogan.js": "latest"
   }
 }

@@ -31,7 +31,7 @@ app.get('*', function(req, res) {
   res.render('pages/404.mustache');
 });
 
-haunt.spook();
+//haunt();
 
 app.listen(3000);
 
