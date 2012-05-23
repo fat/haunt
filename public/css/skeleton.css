@@ -121,7 +121,7 @@ li p { line-height: 21px; }
 ================================================== */
 
 img.scale-with-grid {
-max-width: 100%;
+width: 100%;
 height: auto; }
 
 
@@ -388,16 +388,6 @@ Just create a "fonts" folder at the root,
 copy your FontName into code below and remove
 comment brackets */
 
-/*  @font-face {
-  font-family: 'FontName';
-  src: url('../fonts/FontName.eot');
-  src: url('../fonts/FontName.eot?iefix') format('eot'),
-       url('../fonts/FontName.woff') format('woff'),
-       url('../fonts/FontName.ttf') format('truetype'),
-       url('../fonts/FontName.svg#webfontZam02nTh') format('svg');
-  font-weight: normal;
-  font-style: normal; }
-*/
 
 /*
 * Skeleton V1.1
@@ -642,7 +632,33 @@ or wrap each row of columns in a <div class="row"> */
   height: 0;
 }
 
-.ghost {
-  width: 60px;
-  margin-top: 45px;
+pre code {
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  display: block;
+  padding: 8.5px;
+  margin: 0 0 9px;
+  font-size: 12.025px;
+  line-height: 18px;
+  word-break: break-all;
+  word-wrap: break-word;
+  white-space: pre;
+  white-space: pre-wrap;
+  background-color: whitesmoke;
+  border: 1px solid #CCC;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
 }
+
+.foot { margin-bottom: 50px; }
+
+hr.thick { border-width: 25px 0 0; border-color:#000; margin: 25px 0 50px; }
+
+img.scale-with-grid  { background: #d9d9d9; }
+
+.graveyard { background: url(/img/grave.png) right top; }
+
+.ghost { width: 60px; float: left; margin: 7px 20px 0; }
+
+.white { background: #fff; padding-right: 20px; }
