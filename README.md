@@ -4,7 +4,7 @@
 
 ### What it is?
 
-Haunt is a small, invite only, web service which helps keep your github issues under control. It does this by patroling your github repo and closing, sorting, and commenting on your issues as it sees fit.
+Haunt is a small web service which helps keep your github issues under control. It does this by patroling your github repo and closing, sorting, and commenting on your issues as it sees fit.
 
 Ultimately, Haunt's aim is to reduce the number of manual steps in github issue curation.
 
