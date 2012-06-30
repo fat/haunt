@@ -4,19 +4,19 @@
 
 ### What it is?
 
-Haunt is a small web service which helps keep your github issues under control. It does this by giving you the ability to patrol your github repo programatically! Currently it has API's which allowing you to close, sort, and comment on your issues as you sees fit.
+Haunt is a small web service which helps keep your github issues under control. It does this by giving you the ability to patrol your github repo, easily closing, sorting, and commenting on your issues all programatically!
 
-Ultimately, Haunt's aim is to reduce the number of manual steps in github issue curation.
+Ultimately, Haunt's aim is to reduce the number of manual steps in github issue curation and give you more time to code :)
 
 
 ### How it's done?
 
-Every 15 minutes haunt pulls new issues from your repo and runs a series of tests against the content of each issue. You than take action based on the results of your tests.
+Every ~15 minutes haunt pulls new issues from your repo and runs a series of tests against the content of each issue. You than take action based on the results of your tests.
 
 
 ### Where to start?
 
-Getting started with haunt is *dead* simple (zinnng). Just add him as a collaborator to your project and he will start processing your issues right away.
+Getting started with haunt is *dead* simple (zing :D). Just add him as a collaborator to your project and he will start processing your issues right away.
 
 Tired of haunt? Just remove him from your repo! Simple as that.
 
