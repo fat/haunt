@@ -72,6 +72,7 @@ The haunt object will contain the following properties when testing is made agai
 + haunt.description - the description of a pull request
 + haunt.branches.from - the branch the pull-request is being made from
 + haunt.branches.into - the branch the pull-request is being made into
++ haunt.diff o- the diff of the pull-request
 + haunt.comments - an array of github comment objects
 + haunt.commits - an array of git commits
 + haunt.paths - an array of the paths changed in a commit
