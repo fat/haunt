@@ -102,11 +102,12 @@ When executed after an issue, the haunt will contain eferything made available t
 
 The following convenience methods are made available on all haunt objects. You can call these at any time - though I recommend you only really use then in after methods.
 
-+ haunt.tag - tags an issue/pull-request
++ haunt.tag - (accepts a tagname) tags an issue/pull-request
 + haunt.close - closes an issue/pull-request
-+ haunt.assign - assigns an issue/pull-request
-+ haunt.comment - comments on an issue/pull-request
-
++ haunt.assign - (accepts a username) assigns an issue/pull-request
++ haunt.comment - (accepts a string) comments on an issue/pull-request
++ haunt.comment.failure - (accepts an array of failed tests) generic test failure message, which notifies a user what failed.
++ haunt.comment.warning - (accepts an array of failed tests) generic test warning message, which notifies a user what failed.
 
 ##### Examples 
 
@@ -135,7 +136,7 @@ module.exports = {
 
         'after': function (haunt) {
             if (haunt.failed.length) {
-                haunt.failure(haunt.failed).close();
+                haunt.comment.failure(haunt.failed).close();
             }
         }
     }
