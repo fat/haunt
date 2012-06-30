@@ -127,8 +127,8 @@ module.exports = {
             var hasTests = false;
 
             haunt.paths.forEach(function (path) {
-                if (\/js\/[^./]+.js/.test(path))            hasJS = true;
-                if (\/js\/test\/unit\/[^.]+.js/.test(path)) hasTests = true;
+                if (/\/js\/[^./]+.js/.test(path))            hasJS = true;
+                if (/\/js\/test\/unit\/[^.]+.js/.test(path)) hasTests = true;
             })
 
             assert.ok(!hasJS || hasJS && hasTests);
