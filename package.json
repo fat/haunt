@@ -1,15 +1,15 @@
 {
   "name": "haunt",
   "description": "Github Issue Bot.",
+  "main": "lib/index.js",
   "version": "1.0.0",
   "author": "@fat",
-  "engines": { "node": ">= 0.6.0" },
+  "engines": { "node": ">= 0.8.0" },
   "dependencies": {
-    "tap":              "latest",
-    "async":            "latest",
-    "github":           "latest",
-    "express":          "latest",
-    "hogan.js":         "latest",
-    "express-hogan.js": "latest"
+    "mocha"   : "latest",
+    "async"   : "latest",
+    "github"  : "latest",
+    "request" : "latest",
+    "hogan.js": "latest"
   }
 }

@@ -1,38 +1,10 @@
-// ==========================================
-// Haunt: The Github Issue Bot
-// ==========================================
-// Copyright 2012 Twitter, Inc
-// Licensed under the Apache License v2.0
-// http://www.apache.org/licenses/LICENSE-2.0
-// ==========================================
+var request = require('request');
+var Module  = require('module');
+var vm      = require('vm');
 
-"use strict";
+var sandbox = { module: { exports: {} } }; //shitty sandboxed context to limit the amount of scaryness
 
-var express = require('express');
-var hogan   = require('express-hogan.js');
-var haunt   = require('./lib/haunt');
-
-var app = express.createServer();
-
-app.configure(function () {
-  app.set('views', __dirname + '/views');
-  app.register('.mustache', hogan);
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(express.static(__dirname + '/public'));
-  app.use(app.router);
+request('https://raw.github.com/documentcloud/underscore/master/underscore.js', function (err, res, body) {
+  vm.runInNewContext(body, sandbox, 'myfile.vm');
+  console.log(sandbox);
 });
-
-app.get('/', function(req, res) {
-  return res.render('pages/index.mustache');
-});
-
-app.get('*', function(req, res) {
-  res.render('pages/404.mustache');
-});
-
-// haunt();
-
-app.listen(3000);
-
-console.log('Express server listening on port 3000');
