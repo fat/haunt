@@ -55,7 +55,7 @@ module.exports = {
             assert.ok(/<3/.test(haunt.description));
         },
 
-        after: function (haunt) {
+        'after': function (haunt) {
             if (!haunt.failed.length) haunt.tag('<3');
         }
 
@@ -114,6 +114,7 @@ The following convenience methods are made available on all haunt objects. You c
 Here's the simple Bootstrap haunt.js file that I wrote - it saves me sooooo much time!: 
 
 ```js
+
 module.exports = {
 
     'pull-request': {
