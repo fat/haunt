@@ -1,10 +1,12 @@
 # HAUNT
 
+## Note: This isn't done yet. And basically will only create the issue and pull request objects at this point.
+
 ---
 
 ### What it is?
 
-Haunt is a small web service which helps keep your github issues under control. It does this by giving you the ability to patrol your github repo, easily closing, sorting, and commenting on your issues all programatically!
+Haunt is a small bot which helps keep your github issues under control. It does this by patrol your github repo, and exposing an api to you for easily closing, sorting, and commenting on all your issues!
 
 Ultimately, Haunt's aim is to reduce the number of manual steps in github issue curation and give you more time to code :)
 
@@ -38,7 +40,7 @@ module.exports = {
 
 Each optional object (`pull-request` and `issue`) may include a series of tests to be ran against the specified issue type. In addition to the tests you may also specifiy a before and after property. Before will be executed before tests are ran, after will be executed after tests have ran. The before and after methods are passed one argument, the haunt object.
 
-+ haunt - an object which contains an inteface into a github issue or pull-request.
++ haunt - an object which contains an interface into a github issue or pull-request.
 
 Tests however are passed two arguments:
 
