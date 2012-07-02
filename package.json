@@ -8,7 +8,6 @@
   "dependencies": {
     "mocha"   : "latest",
     "async"   : "latest",
-    "github"  : "latest",
     "request" : "latest",
     "hogan.js": "latest"
   }
