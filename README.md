@@ -1,8 +1,10 @@
 # HAUNT
 
-## Note: This isn't done yet. And basically will only create the issue and pull request objects at this point.
+### Note: 
 
-## TODO
+This isn't done yet. And basically will only create the issue and pull request objects at this point.
+
+### TODO
 
 + Find a mocha.reporter which doesn't log to the terminal
 + Actually Implement methods in helper.js
