@@ -2,6 +2,14 @@
 
 ## Note: This isn't done yet. And basically will only create the issue and pull request objects at this point.
 
+## TODO
+
++ Find a mocha.reporter which doesn't log to the terminal
++ Actually Implement methods in helper.js
++ Decide how to mark issue has consumed (so that same issue isn't reprocessed)
++ move haunt onto some sort of cron/interval thing
++ web service front end?
+
 ---
 
 ### What it is?
