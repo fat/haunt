@@ -26,7 +26,7 @@ This will give you a haunt command you can use from terminal.
 
 Running haunt with no arguments will output some simple cli documentation.
 
-To run some tests against a repo, you might do something like this:
+To run some local tests against a remote repo, you might do something like this:
 
     $ haunt -u user:pass ./path/to/my/local/tests.js http://github.com/my/repo
 
