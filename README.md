@@ -184,8 +184,7 @@ The following convenience methods are made available on all haunt objects. You c
 + haunt.close - closes an issue/pull-request
 + haunt.assign - (accepts a username) assigns an issue/pull-request
 + haunt.comment - (accepts a string) comments on an issue/pull-request
-+ haunt.comment.failure - (accepts an array of failed tests) generic test failure message, which notifies a user what failed.
-+ haunt.comment.warning - (accepts an array of failed tests) generic test warning message, which notifies a user what failed.
++ haunt.raise - generic test failure message, which notifies a user what failed based on mocha reporter.
 
 ##### Examples
 
