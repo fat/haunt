@@ -2,7 +2,7 @@
 
 ### What is it?
 
-**Haunt helps you keep your github issues under control.** It does this by allowing you to run unit tests against github issues and pull requests, then make contextual decisions about closing, sorting, tagging, and commenting.
+**Haunt helps you keep your github issues under control.** It does this by allowing you to run unit tests against github issues and pull-requests, then make contextual decisions about closing, sorting, tagging, and commenting.
 
 ---
 ### How it's done?
@@ -105,7 +105,7 @@ module.exports = {
 
 ##### Issues
 
-When made against an issue, haunt will contain the following properties.
+When testing issues, your function will be passed an object with the following properties:
 
 + issue.created_at - the created_at time of an issue
 + issue.updated_at - the updated_at time of an issue
@@ -131,9 +131,9 @@ When made against an issue, haunt will contain the following properties.
 + issue.comments[x].url - the permalink url for a particular comment
 
 
-##### Pull Request
+##### Pull-Request
 
-The haunt object will contain the following properties (in addition to everything included in a normal issue), when testing against a pull-request:
+When testing pull-requests, your function will be passed an object with the following properties (in addition to all properties provided to a normal issue as specified above):
 
 + issue.diff o- the complete diff of a pull-request
 + issue.files - an array of the files changed in a commit
@@ -165,25 +165,26 @@ The haunt object will contain the following properties (in addition to everythin
 
 ##### Before
 
-When executed before an issue, the haunt contain everything made available to a regular issue/pull-request test.
+Before methods will be passed an object with the same properties as an issue/pull-request.
 
 ##### After
 
-When executed after an issue, the haunt will contain everything made available to a regular issue/pull-request test, with the addition of a mocha reporter object:
+After methods will be passed an object with the same properties as an issue/pull-request, with the addition of a mocha reporter object:
 
-+ haunt.reporter.stats - a mocha stat object
-+ haunt.reporter.stats.tests - the number of tests run
-+ haunt.reporter.stats.passes - the number of tests passed
-+ haunt.reporter.stats.failures - the number of tests failed
-+ haunt.reporter.failures - an array of failed test object
-+ haunt.reporter.failures[*].title - the title of the failed test
++ issue.reporter.stats - a mocha stat object
++ issue.reporter.stats.tests - the number of tests run
++ issue.reporter.stats.passes - the number of tests passed
++ issue.reporter.stats.failures - the number of tests failed
++ issue.reporter.failures - an array of failed test object
++ issue.reporter.failures[*].title - the title of the failed test
 
 ##### Methods
 
-The following convenience methods are made available on all haunt objects. You can call these at any time - though I recommend you only really use then in `after` methods.
+The following convenience methods are made available on all haunt objects. You can call these at any time - though I recommend you only really use them in `after` methods.
 
-+ haunt.tag - (accepts a tagname) tags an issue/pull-request
-+ haunt.close - closes an issue/pull-request
-+ haunt.assign - (accepts a username) assigns an issue/pull-request
-+ haunt.comment - (accepts a string) comments on an issue/pull-request
-+ haunt.reportFailures - generic test failure message, which notifies a user what failed based on mocha reporter.
++ issue.tag - (accepts a tagname) tags an issue/pull-request
++ issue.close - closes an issue/pull-request
++ issue.assign - (accepts a username) assigns an issue/pull-request
++ issue.comment - (accepts a string) comments on an issue/pull-request
++ issue.reportFailures - generic test failure message, which notifies a user what failed based on mocha reporter.
+
