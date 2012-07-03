@@ -3,9 +3,10 @@
 
     haunt {{#grey}}<test-path> <github-path>{{/grey}}
 
-{{#magenta}}flags:{{/magenta}}
+{{#magenta}}Flags:{{/magenta}}
 
-    {{#yellow}}--user{{/yellow}} - specify a username and password for account to make issue changes on behalf of
+    {{#yellow}}--user{{/yellow}} - (*required*) specify a username and password for account to make issue changes on behalf of
+    {{#yellow}}--stub{{/yellow}} - stubs the github api, so that requests aren't actually made to live github data
     {{#yellow}}--reporter{{/yellow}} - specify a mocha reporter for test output formatting. If not specified, nothing will be output.
 
 {{#magenta}}Example:{{/magenta}}

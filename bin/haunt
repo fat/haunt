@@ -13,7 +13,19 @@ var pass;
 var test;
 var repo;
 
-var input  = nopt({ user: String, reporter: String }, { 'u': ['--user'], 'r': ['--reporter'] }, process.argv, 2)
+var options = {
+    user: String,
+    stub: Boolean,
+    reporter: String
+};
+
+var shorthand = {
+    'u': ['--user'],
+    's': ['--stub'],
+    'r': ['--reporter']
+};
+
+var input  = nopt(options, shorthand, process.argv, 2);
 var render = function (view, context) { console.log(hogan.compile(fs.readFileSync(path.join(__dirname, '../views/', view + '.mustache'), 'utf-8')).renderWithColors(context)); };
 
 input.argv.remain.forEach(function (arg) {
@@ -29,13 +41,11 @@ pass = input.user.split(':')[1];
 
 haunt.auth(user, pass);
 
-render('events/testing', {
-    repo: repo,
-    type: test ? 'locally' : 'remotely'
-});
+render('events/testing', { repo: repo, type: test ? 'locally' : 'remotely' });
 
 return haunt.repo({
-	repo: repo, 
+	repo: repo,
+    stub: input.stub,
 	tests: test && require(path.join(process.cwd(), test)),
-	reporter: input.reporter
+    reporter: input.reporter
 });

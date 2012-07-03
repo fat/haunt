@@ -29,11 +29,9 @@ module.exports = {
         },
 
         'after': function (pull) {
-
             if (pull.reporter.stats.failures) {
                 pull.reportFailures(pull.close.bind(pull))
             }
-
         }
 
     },
@@ -51,11 +49,11 @@ module.exports = {
         },
 
         'should include a jsfiddle/jsbin illustrating the problem': function (issue) {
-
+            assert.ok(/(jsfiddle|jsbin)/.test(issue.body))
         },
 
         'should include a tag to delegate the problem to @mdo or @fat': function (issue) {
-
+            assert.ok(/tag: (js|css)/.test(issue.body))
         },
 
         'after': function (issue) {

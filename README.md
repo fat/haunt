@@ -26,6 +26,26 @@ This will give you a haunt command you can use from terminal.
 
 Running haunt with no arguments will output some simple cli documentation.
 
+
+    Usage:
+
+        haunt <test-path> <github-path>
+
+    Flags:
+
+        --user - (*required*) specify a username and password for account to make issue changes on behalf of
+        --stub - stubs the github api, so that requests aren't actually made to live github data
+        --reporter - specify a mocha reporter for test output formatting. If not specified, nothing will be output.
+
+    Example:
+
+        $ haunt -u user:pass ./haunt.js http://github.com/twitter/bootstrap
+
+    General Help:
+
+        http://git.io/haunt
+
+
 To run some local tests against a remote repo, you might do something like this:
 
     $ haunt -u user:pass ./path/to/my/local/tests.js http://github.com/my/repo
@@ -48,13 +68,17 @@ var haunt = require('haunt');
 haunt.auth('user', 'pass');
 haunt.repo('http://github.com/my/repo', callback);
 
-// haunt.repo also can take an options object which may includes other optional
-// options like tests (which is a haunt test object) or
-// reporter (which specifies a mocha test reporter).
+// haunt.repo also can take an options object.
+// This can contain things like:
+// + tests - (string) a haunt test object
+// + reporter - (js object) a mocha test reporter type
+// + stub - (boolean) stubs the gihtub api write requests. great for testing.
+
 haunt.repo({
     repo: 'http://github.com/my/repo',
     tests: myTests,
-    reporter: 'Landing'
+    reporter: 'Landing',
+    stub: true
 });
 ```
 
