@@ -1,9 +1,5 @@
 # HAUNT
 
-### Note:
-
-This isn't done yet. And basically will only create the issue and pull request objects at this point.
-
 ### TODO
 + Decide how to mark issue has consumed (so that same issue isn't reprocessed)... should we even do this?
 
