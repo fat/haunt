@@ -85,17 +85,23 @@ A simple issue test file might look like this:
 var assert = require('assert');
 
 module.exports = {
+
     'issue': {
 
-        'should include a <3 in the description': function (haunt) {
-            assert.ok(/<3/.test(haunt.description));
+        'issues should be prefixed with the word bug': function (issue) {
+            assert.ok(/^bug/.test(issue.title));
         },
 
-        'after': function (haunt) {
-            if (!haunt.reporter.stats.failures) haunt.tag('<3');
+        'after': function (issue) {
+
+            if (issue.reporter.stats.failures) {
+                issue.raise(issue.close.bind(issue));
+            }
+
         }
 
     }
+
 }
 ```
 
@@ -185,65 +191,3 @@ The following convenience methods are made available on all haunt objects. You c
 + haunt.assign - (accepts a username) assigns an issue/pull-request
 + haunt.comment - (accepts a string) comments on an issue/pull-request
 + haunt.raise - generic test failure message, which notifies a user what failed based on mocha reporter.
-
-##### Examples
-
-Here's the simple Bootstrap haunt.js file that I wrote - it saves me sooooo much time!:
-
-```js
-var assert = require('assert');
-
-module.exports = {
-
-    'pull-request': {
-
-        'should always be made against -wip branches': function (haunt) {
-            assert.ok(/\-wip$/.test(haunt.branches.to.test));
-        },
-
-        'should always include a unit test if changing js files': function (haunt) {
-            var hasJS    = false;
-            var hasTests = false;
-
-            haunt.paths.forEach(function (path) {
-                if (/\/js\/[^./]+.js/.test(path))            hasJS = true;
-                if (/\/js\/test\/unit\/[^.]+.js/.test(path)) hasTests = true;
-            })
-
-            assert.ok(!hasJS || hasJS && hasTests);
-        },
-
-        'after': function (haunt) {
-            if (haunt.failed.length) {
-                haunt.comment.failure(haunt.failed).close();
-            }
-        }
-    }
-
-    'issue': {
-
-        'should always include a tag definition': function (haunt) {
-            assert.ok(/tag: \w+/.test(haunt.description))
-        }
-
-        'after': function (haunt) {
-            // tag as popular if > 5 +1's
-            var plusOne = 0;
-
-            haunt.comments.forEach(function (comment) {
-                if (/\+1/.test(comment.text)) plusOne++;
-            });
-
-            if (plusOne > 5) haunt.tag('Popular')
-
-            // apply user defined tags
-            var tags = /tag: ([\w, ]+)/.exec(haunt.description)[1].replace(/\s+/, '').split(',');
-
-            tags.forEach(haunt.tag);
-        }
-
-
-    }
-
-}
-```
