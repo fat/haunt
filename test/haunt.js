@@ -48,12 +48,9 @@ module.exports = {
             if (Object.keys(plus) > 10) issue.tag('popular')
         },
 
-        'should include a jsfiddle/jsbin illustrating the problem': function (issue) {
-            assert.ok(/(jsfiddle|jsbin)/.test(issue.body))
-        },
-
-        'should include a tag to delegate the problem to @mdo or @fat': function (issue) {
-            assert.ok(/tag: (js|css)/.test(issue.body))
+        'should include a jsfiddle/jsbin illustrating the problem if tagged with js but not a feature': function (issue) {
+            var labels = issue.labels.map(function (label) { return label.name });
+            if (~labels.indexOf('js') && !~labels.indexOf('feature')) assert.ok(/(jsfiddle|jsbin)/.test(issue.body))
         },
 
         'after': function (issue) {
