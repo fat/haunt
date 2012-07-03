@@ -3,10 +3,9 @@
 var hogan = require('hogan.js');
 var nopt  = require('nopt');
 var path  = require('path');
-var fs    = require('fs');
 
-var color = require('../lib/util/hogan-colors');
-var haunt = require('../lib');
+var template = require('../lib/util/hogan-colors');
+var haunt    = require('../lib');
 
 var user;
 var pass;
@@ -26,22 +25,21 @@ var shorthand = {
 };
 
 var input  = nopt(options, shorthand, process.argv, 2);
-var render = function (view, context) { console.log(hogan.compile(fs.readFileSync(path.join(__dirname, '../views/', view + '.mustache'), 'utf-8')).renderWithColors(context)); };
 
 input.argv.remain.forEach(function (arg) {
     if (/\.git$/.test(arg) || /^https?:\/\//.test(arg)) repo = arg.replace(/\.git$/, '');
     else test = arg;
 });
 
-if (!repo)       return render('docs/index');
-if (!input.user) return render('docs/no-user');
+if (!repo)       return template.render('docs/index');
+if (!input.user) return template.render('docs/no-user');
 
 user = input.user.split(':')[0];
 pass = input.user.split(':')[1];
 
 haunt.auth(user, pass);
 
-render('events/testing', { repo: repo, type: test ? 'locally' : 'remotely' });
+template.render('events/testing', { repo: repo, type: test ? 'locally' : 'remotely' });
 
 return haunt.repo({
 	repo: repo,
