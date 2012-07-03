@@ -1,1 +1,16 @@
-haunt
+#!/usr/bin/env node
+
+var haunt = require('../lib');
+
+var test;
+var remote;
+
+process.argv.slice(2).forEach(function (arg) {
+	if (/\.git$/.test(arg) || /^https?:\/\//.test(arg)) remote = arg.replace(/\.git$/, '');
+	else test = arg;
+});
+
+if (!remote && !test)     haunt.allRepos();
+else if (remote && !test) haunt.repo(remote);
+else if (remote && test)  haunt.repoWithTest(remote, test);
+else                      console.log('please provide a valid remote github location')

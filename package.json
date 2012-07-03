@@ -4,11 +4,12 @@
   "main": "lib/index.js",
   "version": "1.0.0",
   "author": "@fat",
+  "bin": "bin/haunt",
   "engines": { "node": ">= 0.8.0" },
   "dependencies": {
-    "mocha"   : "latest",
-    "async"   : "latest",
-    "request" : "latest",
-    "hogan.js": "latest"
+    "mocha"    : "latest",
+    "async"    : "latest",
+    "request"  : "latest",
+    "hogan.js" : "latest"
   }
 }
