@@ -82,10 +82,12 @@ Each optional object (`pull-request` and `issue`) should include a series of tes
 A simple issue test file might look like this:
 
 ```js
+var assert = require('assert');
+
 module.exports = {
     'issue': {
 
-        'should include a <3 in the description': function (assert, haunt) {
+        'should include a <3 in the description': function (haunt) {
             assert.ok(/<3/.test(haunt.description));
         },
 
@@ -190,16 +192,17 @@ The following convenience methods are made available on all haunt objects. You c
 Here's the simple Bootstrap haunt.js file that I wrote - it saves me sooooo much time!:
 
 ```js
+var assert = require('assert');
 
 module.exports = {
 
     'pull-request': {
 
-        'should always be made against -wip branches': function (assert, haunt) {
+        'should always be made against -wip branches': function (haunt) {
             assert.ok(/\-wip$/.test(haunt.branches.to.test));
         },
 
-        'should always include a unit test if changing js files': function (assert, haunt) {
+        'should always include a unit test if changing js files': function (haunt) {
             var hasJS    = false;
             var hasTests = false;
 
@@ -220,7 +223,7 @@ module.exports = {
 
     'issue': {
 
-        'should always include a tag definition': function (assert, haunt) {
+        'should always include a tag definition': function (haunt) {
             assert.ok(/tag: \w+/.test(haunt.description))
         }
 
