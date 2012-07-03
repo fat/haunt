@@ -11,7 +11,7 @@ module.exports = {
         'after': function (issue) {
 
             if (issue.reporter.stats.failures) {
-                issue.raise(issue.close.bind(issue));
+                issue.reportFailures(issue.close.bind(issue));
             }
 
         }

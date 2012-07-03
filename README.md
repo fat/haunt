@@ -93,7 +93,7 @@ module.exports = {
         'after': function (issue) {
 
             if (issue.reporter.stats.failures) {
-                issue.raise(issue.close.bind(issue));
+                issue.reportFailures(issue.close.bind(issue));
             }
 
         }
@@ -186,4 +186,4 @@ The following convenience methods are made available on all haunt objects. You c
 + haunt.close - closes an issue/pull-request
 + haunt.assign - (accepts a username) assigns an issue/pull-request
 + haunt.comment - (accepts a string) comments on an issue/pull-request
-+ haunt.raise - generic test failure message, which notifies a user what failed based on mocha reporter.
++ haunt.reportFailures - generic test failure message, which notifies a user what failed based on mocha reporter.
