@@ -31,7 +31,7 @@ module.exports = {
         'after': function (pull) {
 
             if (pull.reporter.stats.failures) {
-                pull.raise(pull.close.bind(pull))
+                pull.reportFailures(pull.close.bind(pull))
             }
 
         }
@@ -60,7 +60,7 @@ module.exports = {
 
         'after': function (issue) {
             if (issue.reporter.stats.failures) {
-                issue.raise(issue.close.bind(issue))
+                issue.reportFailures(issue.close.bind(issue))
             }
         }
 

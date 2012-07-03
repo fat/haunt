@@ -1,20 +1,15 @@
 # HAUNT
 
-### TODO
-+ Decide how to mark issue has consumed (so that same issue isn't reprocessed)... should we even do this?
+### What is it?
+
+**Haunt helps you keep your github issues under control.** It does this by allowing you to run unit tests against github issues and pull-requests, then make contextual decisions about closing, sorting, tagging, and commenting.
 
 ---
-
-### What it is?
-
-**Huant helps you keep your github issues under control.** It does this by allowing you to run contextual unit tests against github issues and pull requests, then make decisions based on the results about closing, sorting, tagging, and commenting.
-
-
 ### How it's done?
 
-Haunt pulls all open issues/pull-requests from your repo and gathers a bunch of data about them from githubs api. It then runs a series of tests (which you define). Each test is provided a special haunt object which contains all the issue data as well as an api to act directly on the issue.
+Haunt pulls all open issues/pull-requests from your repo and gathers a bunch of data about them from github's api. It then runs a series of tests (which you define). Each test is provided a special haunt object which contains all the issue data as well as an api to act directly on the issue.
 
-
+---
 ### Where to start?
 
 You can use haunt from the command line or programatically.
@@ -31,36 +26,39 @@ This will give you a haunt command you can use from terminal.
 
 Running haunt with no arguments will output some simple cli documentation.
 
-To run some tests against a repo, you might do something like this:
+To run some local tests against a remote repo, you might do something like this:
 
     $ haunt -u user:pass ./path/to/my/local/tests.js http://github.com/my/repo
 
 **Note:** the `--user` or `-u` flag is required. We use this to authenticate against the github api. All actions performed by your tests will be made on behalf of the authenticated user.
 
-
-It's also worth noting that if you don't provide a local test file, haunt will look for a `haunt.js` file in the root of the repo. This might look something like:
-
+It's also worth noting that if you don't provide a local test file, haunt will look for a remote `haunt.js` file in the root of the remote repo. This might look something like:
 
     $ haunt -u user:pass http://github.com/my/repo
 
 ##### Programatic API
 
-You may want to use the programatic api to build out a service, or something which routinely runs to keep your issues under control at a more consistent interval.
+You may want to use the programatic api to build out a service, or something which routinely runs to keep your issues under control at a more consistent interval (like a bot).
 
-To use haunt programatticaly, just do something like this:
+To use haunt programmatically, just do something like:
 
 ```js
 var haunt = require('haunt');
 
 haunt.auth('user', 'pass');
-haunt.repo('http://github.com/my/repo');
+haunt.repo('http://github.com/my/repo', callback);
 
-// haunt.repo takes an optional second argument which you can use to specify
-// the path to a local test file to use instead of a remote haunt.js
-// haunt.repo('http://github.com/my/repo', './path/to/my/local/tests.js');
+// haunt.repo also can take an options object which may includes other optional
+// options like tests (which is a haunt test object) or
+// reporter (which specifies a mocha test reporter).
+haunt.repo({
+    repo: 'http://github.com/my/repo',
+    tests: myTests,
+    reporter: 'Landing'
+});
 ```
 
-
+---
 ### Writing Tests
 
 All haunt tests are assumed to be syncronous.
@@ -95,7 +93,7 @@ module.exports = {
         'after': function (issue) {
 
             if (issue.reporter.stats.failures) {
-                issue.raise(issue.close.bind(issue));
+                issue.reportFailures(issue.close.bind(issue));
             }
 
         }
@@ -107,7 +105,7 @@ module.exports = {
 
 ##### Issues
 
-When made against an issue, haunt will contain the following properties.
+When testing issues, your function will be passed an object with the following properties:
 
 + issue.created_at - the created_at time of an issue
 + issue.updated_at - the updated_at time of an issue
@@ -133,9 +131,9 @@ When made against an issue, haunt will contain the following properties.
 + issue.comments[x].url - the permalink url for a particular comment
 
 
-##### Pull Request
+##### Pull-Request
 
-The haunt object will contain the following properties (in addition to everything included in a normal issue), when testing against a pull-request:
+When testing pull-requests, your function will be passed an object with the following properties (in addition to all properties provided to a normal issue as specified above):
 
 + issue.diff o- the complete diff of a pull-request
 + issue.files - an array of the files changed in a commit
@@ -165,29 +163,27 @@ The haunt object will contain the following properties (in addition to everythin
 + issue.head.user - the github user object who own the requesting repo
 + issue.head.repo - a github repo object
 
+##### Before
 
-#### Before
+Before methods will be passed an object with the same properties as an issue/pull-request.
 
-When executed before an issue, the haunt contain everything made available to a regular issue/pull-request test.
+##### After
 
-#### After
+After methods will be passed an object with the same properties as an issue/pull-request, with the addition of a mocha reporter object:
 
-When executed after an issue, the haunt will contain everything made available to a regular issue/pull-request test, with the addition of a mocha reporter object:
-
-+ haunt.reporter.stats - a mocha stat object
-+ haunt.reporter.stats.tests - the number of tests run
-+ haunt.reporter.stats.passes - the number of tests passed
-+ haunt.reporter.stats.failures - the number of tests failed
-+ haunt.reporter.failures - an array of failed test object
-+ haunt.reporter.failures[*].title - the title of the failed test
-
++ issue.reporter.stats - a mocha stat object
++ issue.reporter.stats.tests - the number of tests run
++ issue.reporter.stats.passes - the number of tests passed
++ issue.reporter.stats.failures - the number of tests failed
++ issue.reporter.failures - an array of failed test object
++ issue.reporter.failures[*].title - the title of the failed test
 
 ##### Methods
 
-The following convenience methods are made available on all haunt objects. You can call these at any time - though I recommend you only really use then in `after` methods.
+The following convenience methods are made available on all haunt objects. You can call these at any time - though I recommend you only really use them in `after` methods.
 
-+ haunt.tag - (accepts a tagname) tags an issue/pull-request
-+ haunt.close - closes an issue/pull-request
-+ haunt.assign - (accepts a username) assigns an issue/pull-request
-+ haunt.comment - (accepts a string) comments on an issue/pull-request
-+ haunt.raise - generic test failure message, which notifies a user what failed based on mocha reporter.
++ issue.tag - (accepts a tagname) tags an issue/pull-request
++ issue.close - closes an issue/pull-request
++ issue.assign - (accepts a username) assigns an issue/pull-request
++ issue.comment - (accepts a string) comments on an issue/pull-request
++ issue.reportFailures - generic test failure message, which notifies a user what failed based on mocha reporter.
