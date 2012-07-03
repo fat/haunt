@@ -38,7 +38,7 @@ To run some tests against a repo, you might do something like this:
 **Note:** the `--user` or `-u` flag is required. We use this to authenticate against the github api. All actions performed by your tests will be made on behalf of the authenticated user.
 
 
-It's also worth noting that if you don't provide a local test file, haunt will look for `haunt.js` file in the root of the repo. This might look something like:
+It's also worth noting that if you don't provide a local test file, haunt will look for a `haunt.js` file in the root of the repo. This might look something like:
 
 
     $ haunt -u user:pass http://github.com/my/repo
@@ -50,14 +50,14 @@ You may want to use the programatic api to build out a service, or something whi
 To use haunt programatticaly, just do something like this:
 
 ```js
-    var haunt = require('haunt');
+var haunt = require('haunt');
 
-    haunt.auth('user', 'pass');
-    haunt.repo('http://github.com/my/repo');
+haunt.auth('user', 'pass');
+haunt.repo('http://github.com/my/repo');
 
-    // repo takes an optional second argument which you can use to specify
-    // the path to a local test file to use instead of a remote haunt.js
-    // haunt.repo('http://github.com/my/repo', './path/to/my/local/tests.js');
+// haunt.repo takes an optional second argument which you can use to specify
+// the path to a local test file to use instead of a remote haunt.js
+// haunt.repo('http://github.com/my/repo', './path/to/my/local/tests.js');
 ```
 
 
