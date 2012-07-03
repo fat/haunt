@@ -36,6 +36,6 @@ render('events/testing', {
 
 return haunt.repo({
 	repo: repo, 
-	test: test,
+	tests: test && require(path.join(process.cwd(), test)),
 	reporter: input.reporter
 });

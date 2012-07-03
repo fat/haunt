@@ -49,11 +49,11 @@ haunt.auth('user', 'pass');
 haunt.repo('http://github.com/my/repo', callback);
 
 // haunt.repo also can take an options object which may includes other optional 
-// options like test (which specifies the location to a local test file) or
+// options like tests (which is a haunt test object) or
 // reporter (which specifies a mocha test reporter).
 haunt.repo({
     repo: 'http://github.com/my/repo', 
-    test: './path/to/my/local/tests.js',
+    tests: myTests,
     reporter: 'Landing'
 });
 ```
