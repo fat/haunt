@@ -1,20 +1,15 @@
 # HAUNT
 
-### TODO
-+ Decide how to mark issue has consumed (so that same issue isn't reprocessed)... should we even do this?
+### What is it?
+
+**Haunt helps you keep your github issues under control.** It does this by allowing you to run unit tests against github issues and pull requests, then make contextual decisions about closing, sorting, tagging, and commenting.
 
 ---
-
-### What it is?
-
-**Huant helps you keep your github issues under control.** It does this by allowing you to run contextual unit tests against github issues and pull requests, then make decisions based on the results about closing, sorting, tagging, and commenting.
-
-
 ### How it's done?
 
-Haunt pulls all open issues/pull-requests from your repo and gathers a bunch of data about them from githubs api. It then runs a series of tests (which you define). Each test is provided a special haunt object which contains all the issue data as well as an api to act directly on the issue.
+Haunt pulls all open issues/pull-requests from your repo and gathers a bunch of data about them from github's api. It then runs a series of tests (which you define). Each test is provided a special haunt object which contains all the issue data as well as an api to act directly on the issue.
 
-
+---
 ### Where to start?
 
 You can use haunt from the command line or programatically.
@@ -37,30 +32,33 @@ To run some tests against a repo, you might do something like this:
 
 **Note:** the `--user` or `-u` flag is required. We use this to authenticate against the github api. All actions performed by your tests will be made on behalf of the authenticated user.
 
-
 It's also worth noting that if you don't provide a local test file, haunt will look for a `haunt.js` file in the root of the repo. This might look something like:
-
 
     $ haunt -u user:pass http://github.com/my/repo
 
 ##### Programatic API
 
-You may want to use the programatic api to build out a service, or something which routinely runs to keep your issues under control at a more consistent interval.
+You may want to use the programatic api to build out a service, or something which routinely runs to keep your issues under control at a more consistent interval (like a bot).
 
-To use haunt programatticaly, just do something like this:
+To use haunt programmatically, just do something like:
 
 ```js
 var haunt = require('haunt');
 
 haunt.auth('user', 'pass');
-haunt.repo('http://github.com/my/repo');
+haunt.repo('http://github.com/my/repo', callback);
 
-// haunt.repo takes an optional second argument which you can use to specify
-// the path to a local test file to use instead of a remote haunt.js
-// haunt.repo('http://github.com/my/repo', './path/to/my/local/tests.js');
+// haunt.repo also can take an options object which may includes other optional 
+// options like test (which specifies the location to a local test file) or
+// reporter (which specifies a mocha test reporter).
+haunt.repo({
+    repo: 'http://github.com/my/repo', 
+    test: './path/to/my/local/tests.js',
+    reporter: 'Landing'
+});
 ```
 
-
+---
 ### Writing Tests
 
 All haunt tests are assumed to be syncronous.
@@ -85,17 +83,23 @@ A simple issue test file might look like this:
 var assert = require('assert');
 
 module.exports = {
+
     'issue': {
 
-        'should include a <3 in the description': function (haunt) {
-            assert.ok(/<3/.test(haunt.description));
+        'issues should be prefixed with the word bug': function (issue) {
+            assert.ok(/^bug/.test(issue.title));
         },
 
-        'after': function (haunt) {
-            if (!haunt.reporter.stats.failures) haunt.tag('<3');
+        'after': function (issue) {
+
+            if (issue.reporter.stats.failures) {
+                issue.raise(issue.close.bind(issue));
+            }
+
         }
 
     }
+
 }
 ```
 
@@ -159,12 +163,11 @@ The haunt object will contain the following properties (in addition to everythin
 + issue.head.user - the github user object who own the requesting repo
 + issue.head.repo - a github repo object
 
-
-#### Before
+##### Before
 
 When executed before an issue, the haunt contain everything made available to a regular issue/pull-request test.
 
-#### After
+##### After
 
 When executed after an issue, the haunt will contain everything made available to a regular issue/pull-request test, with the addition of a mocha reporter object:
 
@@ -175,7 +178,6 @@ When executed after an issue, the haunt will contain everything made available t
 + haunt.reporter.failures - an array of failed test object
 + haunt.reporter.failures[*].title - the title of the failed test
 
-
 ##### Methods
 
 The following convenience methods are made available on all haunt objects. You can call these at any time - though I recommend you only really use then in `after` methods.
@@ -185,65 +187,3 @@ The following convenience methods are made available on all haunt objects. You c
 + haunt.assign - (accepts a username) assigns an issue/pull-request
 + haunt.comment - (accepts a string) comments on an issue/pull-request
 + haunt.raise - generic test failure message, which notifies a user what failed based on mocha reporter.
-
-##### Examples
-
-Here's the simple Bootstrap haunt.js file that I wrote - it saves me sooooo much time!:
-
-```js
-var assert = require('assert');
-
-module.exports = {
-
-    'pull-request': {
-
-        'should always be made against -wip branches': function (haunt) {
-            assert.ok(/\-wip$/.test(haunt.branches.to.test));
-        },
-
-        'should always include a unit test if changing js files': function (haunt) {
-            var hasJS    = false;
-            var hasTests = false;
-
-            haunt.paths.forEach(function (path) {
-                if (/\/js\/[^./]+.js/.test(path))            hasJS = true;
-                if (/\/js\/test\/unit\/[^.]+.js/.test(path)) hasTests = true;
-            })
-
-            assert.ok(!hasJS || hasJS && hasTests);
-        },
-
-        'after': function (haunt) {
-            if (haunt.failed.length) {
-                haunt.comment.failure(haunt.failed).close();
-            }
-        }
-    }
-
-    'issue': {
-
-        'should always include a tag definition': function (haunt) {
-            assert.ok(/tag: \w+/.test(haunt.description))
-        }
-
-        'after': function (haunt) {
-            // tag as popular if > 5 +1's
-            var plusOne = 0;
-
-            haunt.comments.forEach(function (comment) {
-                if (/\+1/.test(comment.text)) plusOne++;
-            });
-
-            if (plusOne > 5) haunt.tag('Popular')
-
-            // apply user defined tags
-            var tags = /tag: ([\w, ]+)/.exec(haunt.description)[1].replace(/\s+/, '').split(',');
-
-            tags.forEach(haunt.tag);
-        }
-
-
-    }
-
-}
-```
