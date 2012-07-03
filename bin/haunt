@@ -1,16 +1,37 @@
 #!/usr/bin/env node
 
+var hogan = require('hogan.js');
+var nopt  = require('nopt');
+var path  = require('path');
+var fs    = require('fs');
+
+var color = require('../lib/util/hogan-colors');
 var haunt = require('../lib');
 
+var user;
+var pass;
 var test;
-var remote;
+var repo;
 
-process.argv.slice(2).forEach(function (arg) {
-	if (/\.git$/.test(arg) || /^https?:\/\//.test(arg)) remote = arg.replace(/\.git$/, '');
-	else test = arg;
+var input  = nopt({ user: String }, { 'u': ['--user'] }, process.argv, 2)
+var render = function (view, context) { console.log(hogan.compile(fs.readFileSync(path.join(__dirname, '../views/', view + '.mustache'), 'utf-8')).renderWithColors(context)); };
+
+input.argv.remain.forEach(function (arg) {
+    if (/\.git$/.test(arg) || /^https?:\/\//.test(arg)) repo = arg.replace(/\.git$/, '');
+    else test = arg;
 });
 
-if (!remote && !test)     haunt.allRepos();
-else if (remote && !test) haunt.repo(remote);
-else if (remote && test)  haunt.repoWithTest(remote, test);
-else                      console.log('please provide a valid remote github location')
+if (!repo)       return render('docs/index');
+if (!input.user) return render('docs/no-user');
+
+user = input.user.split(':')[0];
+pass = input.user.split(':')[1];
+
+haunt.auth(user, pass);
+
+render('events/testing', {
+    repo: repo,
+    type: test ? 'locally' : 'remotely'
+});
+
+return haunt.repo(repo, test);
