@@ -5,13 +5,13 @@
 
 {{#magenta}}Flags:{{/magenta}}
 
-    {{#yellow}}--user{{/yellow}} - (*required*) specify a username and password for account to make issue changes on behalf of
-    {{#yellow}}--stub{{/yellow}} - stubs the github api, so that requests aren't actually made to live github data
-    {{#yellow}}--reporter{{/yellow}} - specify a mocha reporter for test output formatting. If not specified, nothing will be output.
+    {{#yellow}}--stub{{/yellow}}     - {{#grey}}(-s){{/grey}}      stubs the github api, so that requests aren't actually made to live github data
+    {{#yellow}}--user{{/yellow}}     - {{#grey}}(-u u:p){{/grey}}  specify a username and password for an account to make issue changes on behalf of
+    {{#yellow}}--reporter{{/yellow}} - {{#grey}}(-r Spec){{/grey}} specify a mocha reporter for test output formatting. If not specified, nothing will be output.
 
 {{#magenta}}Example:{{/magenta}}
 
-    $ haunt {{#yellow}}-u user:pass{{/yellow}} ./haunt.js http://github.com/twitter/bootstrap
+    $ haunt .issue_guidelines.js http://github.com/twitter/bootstrap
 
 {{#magenta}}General Help:{{/magenta}}
 

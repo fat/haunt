@@ -33,13 +33,13 @@ Running haunt with no arguments will output some simple cli documentation.
 
     Flags:
 
-        --user - (*required*) specify a username and password for account to make issue changes on behalf of
-        --stub - stubs the github api, so that requests aren't actually made to live github data
-        --reporter - specify a mocha reporter for test output formatting. If not specified, nothing will be output.
+        --stub     - (-s)      stubs the github api, so that requests aren't actually made to live github data
+        --user     - (-u u:p)  specify a username and password for an account to make issue changes on behalf of
+        --reporter - (-r Spec) specify a mocha reporter for test output formatting. If not specified, nothing will be output.
 
     Example:
 
-        $ haunt -u user:pass ./haunt.js http://github.com/twitter/bootstrap
+        $ haunt .issue_guidelines.js http://github.com/twitter/bootstrap
 
     General Help:
 
@@ -48,13 +48,13 @@ Running haunt with no arguments will output some simple cli documentation.
 
 To run some local tests against a remote repo, you might do something like this:
 
-    $ haunt -u user:pass ./path/to/my/local/tests.js http://github.com/my/repo
+    $ haunt ./path/to/my/local/tests.js http://github.com/my/repo
 
-**Note:** the `--user` or `-u` flag is required. We use this to authenticate against the github api. All actions performed by your tests will be made on behalf of the authenticated user.
+**Note:** haunt will prompt you for a username and password. Alternatively, you can specify them as an option by using the `--user` or `-u` flag. We use this to authenticate against the github api. All actions performed by your tests will be made on behalf of the authenticated user.
 
-It's also worth noting that if you don't provide a local test file, haunt will look for a remote `haunt.js` file in the root of the remote repo. This might look something like:
+It's also worth noting that if you don't provide a local test file, haunt will look for a remote `.issue-guidelines.js` file in the root of the remote repo. This might look something like:
 
-    $ haunt -u user:pass http://github.com/my/repo
+    $ haunt http://github.com/my/repo
 
 ##### Programatic API
 
@@ -70,16 +70,16 @@ haunt.repo('http://github.com/my/repo', callback);
 
 // haunt.repo also can take an options object.
 // This can contain things like:
-// + tests - (string) a haunt test object
-// + reporter - (js object) a mocha test reporter type
-// + stub - (boolean) stubs the gihtub api write requests. great for testing.
+// + stub     - (boolean) stubs the github api write requests
+// + tests    - (object)  a haunt test object
+// + reporter - (object)  a mocha test reporter type
 
 haunt.repo({
     repo: 'http://github.com/my/repo',
     tests: myTests,
     reporter: 'Landing',
     stub: true
-});
+}, callback);
 ```
 
 ---
@@ -91,11 +91,8 @@ A basic haunt test file exports a single object with the two optional properties
 
 ```js
 module.exports = {
-
-    'pull-request': { … }
-
-    'issue': { … }
-
+    'pull-requests' : { … },
+    'issues'        : { … }
 }
 ```
 
@@ -108,9 +105,9 @@ var assert = require('assert');
 
 module.exports = {
 
-    'issue': {
+    'issues': {
 
-        'issues should be prefixed with the word bug': function (issue) {
+        'should be prefixed with the word bug': function (issue) {
             assert.ok(/^bug/.test(issue.title));
         },
 
