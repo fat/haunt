@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 
-var hogan = require('hogan.js');
-var nopt  = require('nopt');
-var path  = require('path');
+var prompt = require('prompt');
+var hogan  = require('hogan.js');
+var nopt   = require('nopt');
+var path   = require('path');
 
 var template = require('../lib/util/hogan-colors');
 var haunt    = require('../lib');
@@ -24,26 +25,50 @@ var shorthand = {
     'r': ['--reporter']
 };
 
-var input  = nopt(options, shorthand, process.argv, 2);
+var input = nopt(options, shorthand, process.argv, 2);
+
+var initialize = function (user, pass) {
+    haunt.auth(user, pass);
+
+    template.render('events/testing', { repo: repo, type: test ? 'locally' : 'remotely' });
+
+    return haunt.repo({
+        repo: repo,
+        stub: input.stub,
+        tests: test && require(path.join(process.cwd(), test)),
+        reporter: input.reporter
+    });
+}
 
 input.argv.remain.forEach(function (arg) {
     if (/\.git$/.test(arg) || /^https?:\/\//.test(arg)) repo = arg.replace(/\.git$/, '');
     else test = arg;
 });
 
-if (!repo)       return template.render('docs/index');
-if (!input.user) return template.render('docs/no-user');
+if (!repo)      return template.render('docs/index');
+if (input.user) return initialize.apply(this, input.user.split(':'));
 
-user = input.user.split(':')[0];
-pass = input.user.split(':')[1];
+console.log('Please provide your github credentials:'.yellow)
 
-haunt.auth(user, pass);
+prompt.start();
 
-template.render('events/testing', { repo: repo, type: test ? 'locally' : 'remotely' });
+ var schema = {
+    properties: {
+        username: {
+            pattern: /^[a-zA-Z\s\-]+$/,
+            message: 'Username must be only letters, spaces, or dashes',
+            required: true
+        },
+        password: {
+            hidden: true,
+            required: true
+        }
+    }
+};
 
-return haunt.repo({
-	repo: repo,
-    stub: input.stub,
-	tests: test && require(path.join(process.cwd(), test)),
-    reporter: input.reporter
+prompt.message = ' +';
+prompt.delimiter = ' ';
+
+prompt.get(schema, function (err, result) {
+    initialize(result.username, result.password);
 });

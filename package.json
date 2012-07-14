@@ -7,12 +7,13 @@
   "bin": "bin/haunt",
   "engines": { "node": ">= 0.8.0" },
   "dependencies": {
-    "nopt"       : "latest",
-    "mocha"      : "latest",
-    "async"      : "latest",
-    "colors"     : "latest",
-    "request"    : "latest",
-    "hogan.js"   : "latest",
-    "underscore" : "latest"
+    "nopt"       : "1.0.X",
+    "mocha"      : "1.3.X",
+    "async"      : "0.1.X",
+    "prompt"     : "0.2.X",
+    "colors"     : "0.6.X",
+    "request"    : "2.9.X",
+    "hogan.js"   : "2.0.X",
+    "underscore" : "1.3.X"
   }
 }
