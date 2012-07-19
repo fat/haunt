@@ -48,7 +48,7 @@ input.argv.remain.forEach(function (arg) {
 if (!repo)      return template.render('docs/index');
 if (input.user) return initialize.apply(this, input.user.split(':'));
 
-console.log('Please provide your github credentials:'.yellow);x
+console.log('Please provide your github credentials:'.yellow);
 
 prompt.start();
 
