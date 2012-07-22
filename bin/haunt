@@ -30,7 +30,7 @@ var input = nopt(options, shorthand, process.argv, 2);
 var initialize = function (user, pass) {
     haunt.auth(user, pass);
 
-    template.render('events/testing', { repo: repo, type: test ? 'locally' : 'remotely' });
+    template.render('events/testing', { repo: repo, type: test ? 'locally' : 'remotely', stub: input.stub });
 
     return haunt.repo({
         repo: repo,
