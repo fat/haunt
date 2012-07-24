@@ -2,7 +2,7 @@
   "name": "haunt",
   "description": "Github Issue Bot.",
   "main": "lib/index.js",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "@fat",
   "bin": "bin/haunt",
   "engines": { "node": ">= 0.8.0" },
