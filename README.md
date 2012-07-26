@@ -10,6 +10,15 @@
 Haunt pulls all open issues/pull-requests from your repo and gathers a bunch of data about them from github's api. It then runs a series of tests (which you define). Each test is provided a special haunt object which contains all the issue data as well as an api to act directly on the issue.
 
 ---
+### Real Life Examples
+
+I run Haunt occasionally against [bootstrap's](//github.com/twitter/bootstrap) issues/pull requests to keep them in order and to keep the ticketing process sane. Initially haunt closed 48 of 54 pull requests and about 65+ issues. It also tagged a number of issues as popular (accomplished with a small `before` filter which checks for +1 comments).
+
+Here's [a link](https://github.com/twitter/bootstrap/pull/4165) to an actual pull request it closed. If you look at the bottom you can see that haunt made a comment explaining why the pull request was invalid, before closing it. Closing an issue of course is optional, we're just doing this in bootstrap to weed out people who file issues and never come back.
+
+The tests I ran against bootstrap are literally the same that are in the [examples dir](https://github.com/fat/haunt/blob/master/examples/basic.js) of this repo. The only difference is i've named them `.issue-guidlines.js` [in bootstrap]( https://github.com/twitter/bootstrap/blob/2.1.0-wip/.issue-guidelines.js).
+
+---
 ### Where to start?
 
 You can use haunt from the command line or programatically.
