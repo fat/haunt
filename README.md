@@ -216,4 +216,5 @@ The following convenience methods are made available on all haunt objects. You c
 + issue.close - closes an issue/pull-request
 + issue.assign - (accepts a username) assigns an issue/pull-request
 + issue.comment - (accepts a string) comments on an issue/pull-request
++ issue.files[*].comment - (accepts an comment and line number) comment on a given line number in a diff of a pull-request
 + issue.reportFailures - generic test failure message, which notifies a user what failed based on mocha reporter.
