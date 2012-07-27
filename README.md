@@ -172,6 +172,7 @@ When testing pull-requests, your function will be passed an object with the foll
 + issue.files[*].status - the status of the file (modified, deleted, etc.)
 + issue.files[*].changes - the number of changes made in a file
 + issue.files[*].deletions - the number of deletions made in a file
++ issue.files[*].comments - an array of line comments on the file
 + issue.commits - an array of git commits
 + issue.commits[*].sha - the commit sha
 + issue.commits[*].commit - a commit object
@@ -217,4 +218,5 @@ The following convenience methods are made available on all haunt objects. You c
 + issue.assign - (accepts a username) assigns an issue/pull-request
 + issue.comment - (accepts a string) comments on an issue/pull-request
 + issue.files[*].comment - (accepts an comment and line number) comment on a given line number in a diff of a pull-request
++ issue.files[*].comments[*].reply - (accepts a string) reply to a comment in a diff on a pull request
 + issue.reportFailures - generic test failure message, which notifies a user what failed based on mocha reporter.
