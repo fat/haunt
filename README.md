@@ -94,7 +94,7 @@ haunt.repo({
 ---
 ### Writing Tests
 
-All haunt tests are assumed to be syncronous.
+All haunt tests are assumed to be synchronous.
 
 A basic haunt test file exports a single object with the two optional properties `pull-request` and `issue`. This looks something like this:
 
@@ -105,7 +105,7 @@ module.exports = {
 }
 ```
 
-Each optional object (`pull-request` and `issue`) should include a series of tests to be ran against the specified issue type. In addition to the tests you may also specifiy a before and after property. Before will be executed before all tests are ran, after will be executed after all tests have ran. All methods are passed a single argument which contains an interface into a github issue or pull-request.
+Each optional object (`pull-request` and `issue`) should include a series of tests to be ran against the specified issue type. In addition to the tests you may also specify a before and after property. Before will be executed before all tests are ran, after will be executed after all tests have ran. All methods are passed a single argument which contains an interface into a github issue or pull-request.
 
 A simple issue test file might look like this:
 
@@ -179,7 +179,7 @@ When testing pull-requests, your function will be passed an object with the foll
 + issue.commits[*].commit.message - the commit message
 + issue.commits[*].commit.url - permalink for a given commit
 + issue.commits[*].author - a github user object for the committing author
-+ issue.commits[*].commiter - a github user object for the committer
++ issue.commits[*].committer - a github user object for the committer
 + issue.base - an object representing the branch the pull-request is being made into
 + issue.base.label - an object representing the branch the pull-request is being made into
 + issue.base.ref - the name of the branch being referenced
