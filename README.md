@@ -220,3 +220,4 @@ The following convenience methods are made available on all haunt objects. You c
 + issue.files[*].comment - (accepts an comment and line number) comment on a given line number in a diff of a pull-request
 + issue.files[*].comments[*].reply - (accepts a string) reply to a comment in a diff on a pull request
 + issue.reportFailures - generic test failure message, which notifies a user what failed based on mocha reporter.
++ issue.assertsFailed - only return assertion errors or false if no assertion errors occurred (will ignore runtime errors)

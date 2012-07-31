@@ -52,7 +52,7 @@ console.log('Please provide your github credentials:'.yellow);
 
 prompt.start();
 
- var schema = {
+var schema = {
     properties: {
         username: {
             pattern: /^[a-zA-Z\s\-]+$/,
