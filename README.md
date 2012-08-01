@@ -165,7 +165,7 @@ When testing issues, your function will be passed an object with the following p
 
 When testing pull-requests, your function will be passed an object with the following properties (in addition to all properties provided to a normal issue as specified above):
 
-+ issue.diff o- the complete diff of a pull-request
++ issue.diff - the complete diff of a pull-request
 + issue.files - an array of the files changed in a commit
 + issue.files[*].patch - the patch for a specific file
 + issue.files[*].filename - the filename changed
