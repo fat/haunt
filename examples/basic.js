@@ -8,11 +8,11 @@ module.exports = {
     'pull-requests': {
 
         'should always be made against -wip branches': function (pull) {
-            assert.ok(/\-wip$/.test(pull.base.label))
+            assert.ok(/\-wip$/.test(pull.base.ref))
         },
 
         'should always be made from feature branches': function (pull) {
-            assert.ok(pull.head.label != 'master')
+            assert.notEqual(pull.head.ref, 'master')
         },
 
         'should always include a unit test if changing js files': function (pull) {
