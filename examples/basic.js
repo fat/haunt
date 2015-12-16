@@ -28,7 +28,7 @@ module.exports = {
         },
 
         'after': function (pull) {
-            if (pull.reporter.stats.failures) {
+            if (pull.assertsFailed()) {
                 pull.reportFailures(pull.close.bind(pull))
             }
         }
@@ -53,7 +53,7 @@ module.exports = {
         },
 
         'after': function (issue) {
-            if (issue.reporter.stats.failures) {
+            if (issue.assertsFailed()) {
                 issue.reportFailures(issue.close.bind(issue))
             }
         }
