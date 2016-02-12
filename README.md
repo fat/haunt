@@ -187,7 +187,7 @@ When testing pull-requests, your function will be passed an object with the foll
 + issue.base.sha - the sha
 + issue.base.user - the github user object who own the requesting repo
 + issue.base.repo - a github repo object
-+ issue.head - an object representing the branch the the pull-request is being made from
++ issue.head - an object representing the branch the pull-request is being made from
 + issue.head.label - an object representing the branch the pull-request is being made into
 + issue.head.ref - the name of the branch being referenced
 + issue.head.sha - the sha
